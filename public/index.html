@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whiteboard Meeting</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="../node_modules/socket.io-client/dist/socket.io.js"></script>
+    <script src="js/functions.js"></script>
+    <script src="js/connect.js"></script>
+    <script src="js/rooms.js"></script>
+    <script src="js/register.js"></script>
+    <script src="js/join.js"></script>
+    <script type="text/javascript">
+        var socket = connect();
+        document.addEventListener("DOMContentLoaded", function() {
+            rooms();
+
+            document.querySelector('.joinSubmit').addEventListener('click', function(e) {
+                e.preventDefault();
+
+                var room = document.querySelector('[name=roomName]').value,
+                    user = document.querySelector('.userName').value,
+                    data = {
+                        'name': room,
+                        'user': user
+                    };
+                    
+                socket.emit('join', data);
+            });
+
+            document.querySelector('.close').addEventListener('click', function(e) {
+                e.preventDefault();
+                closeJoinDialogFunc();
+            });
+
+            updateRoomsLoop();
+        });
+    </script>
+</head>
+<body>
+    <h2 class="title">Welcome to Whiteboard Meetings!</h2>
+
+    <div class="middel indexWrapper">
+        <h2 class="currentChannels">Current Channels</h2>
+        <div class="join indexJoin"></div>
+        <div class="register">
+            <h2 class="registerTitle">Register a new Meeting</h2>
+            <input type="text" class="name" placeholder="Meeting Name">
+            <input type="text" class="user" placeholder="User Name">
+            <button class="registerSubmit">Register</button>
+        </div>  
+    </div>
+
+    
+    <div class="joinDialog">
+        <a href="#" class="close">X</a>
+        <h2 class="joinDialogTitle">Enter your name</h2>
+        <div class="userNameWrapper">
+          <input type="text" placeholder="Name" class="userName">
+        </div>
+        <input type="hidden" name="roomName" value="">
+        <button class="joinSubmit">Join</button>
+    </div>
+</body>
+</html>

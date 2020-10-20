@@ -1,0 +1,10 @@
+{
+   "name": "digi_whiteboard",
+   "description": "Collaborative drawing canvas",
+   "author": "Ursine (based on Code-and.Coffee)",
+   "dependencies": {
+      "express": "4.x",
+      "socket.io": "*",
+      "fs": "*"
+   }
+}

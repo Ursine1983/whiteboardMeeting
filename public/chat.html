@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>MiniDoodle</title>
+      <meta charset="utf-8">
+      <link rel="stylesheet" href="css/style.css" />
+      <script src="../node_modules/socket.io-client/dist/socket.io.js"></script>
+      <script src="js/functions.js"></script>
+      <script src="js/connect.js"></script>
+      <script src="js/rooms.js"></script>
+      <script src="js/join.js"></script>
+      <script src="js/bindings.js"></script>
+      <script type="text/javascript">
+        var socket = connect();
+        document.addEventListener("DOMContentLoaded", function() {
+            rooms();
+            var room = findGetParameter('name'),
+                data = {
+                  'name': room
+                };
+            socket.emit('join_room', data);
+        });
+      </script>
+      <script src="js/client.js"></script>
+    </head>
+
+    <body>
+      <div class="left">
+        <h2>Meetings</h2>
+        <div class="join"></div>
+      </div>
+      
+      <div class="middel">
+        <h2 class="roomName"></h2>
+        <canvas id="drawing"></canvas>
+        <div class="brushSettings">
+          <span>Brush Settings:</span>
+          <label for="brushWidth">Width</label>
+          <input type="number" name="brushWidth" class="brushWidth" value="1">
+          <label for="brushColor">Color</label>
+          <input type="color" name="brushColor" class="brushColor" value="#000000">
+          <button id="clearCanvasDialog">Clear Canvas</button>
+        </div>
+        <textarea id="chat"></textarea>
+        <input type="text" id="message">
+      </div>
+      
+      <div class="right">
+        <h2>User</h2>
+        <div class="userList"></div>
+      </div>
+
+      <div class="clearDialog">
+          <a href="#" class="close">X</a>
+          <h2>Give your screenshot a name</h2>
+          <div class="screenshotName">
+            <span class="prefix"></span>
+            <input type="text" placeholder="screenshot name" class="whiteboardName">
+            <span class="postfix"></span>
+          </div>
+          <input type="submit" value="Save" class="saveWhiteboard">
+          <span class="line"></span><span class="alt">or</span><span class="line"></span>
+          <input type="submit" value="Discard whiteboard" class="discardWhiteboard">
+      </div>
+    </body>
+</html>
