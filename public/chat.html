@@ -19,12 +19,18 @@
                   'name': room
                 };
             socket.emit('join_room', data);
+
+            document.querySelector('.roomName').innerHTML = room.split('_')[1];
         });
       </script>
       <script src="js/client.js"></script>
     </head>
 
     <body>
+      <div class="roomName">
+
+      </div>
+
       <div class="left">
         <h2>Meetings</h2>
         <div class="join"></div>
