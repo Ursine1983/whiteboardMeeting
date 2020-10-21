@@ -37,11 +37,10 @@ io.on('connection', function (socket) {
 
     // add handler for clear canvas
     socket.on('clear', function(data) {
-        console.log(data);
         if (typeof data["screenshot"] !== 'undefined' && data["screenshot"] !== null && data["screenshot"] !== false){
             var img = Buffer.from(data["screenshot"].img.replace(/^data:image\/png;base64,/, ""), 'base64');
             
-            fs.writeFile('archives/img/' + data["screenshot"]['sc_name'], img, 'base64', function(err) {
+            fs.writeFile('archive/img/' + data["screenshot"]['sc_name'], img, 'base64', function(err) {
                 if (err) return console.log('err: ' + err);
                 console.log(data["screenshot"]['sc_name'] + ' saved ...');
             });
