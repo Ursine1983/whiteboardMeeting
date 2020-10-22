@@ -55,12 +55,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     window.addEventListener('beforeunload', function(e) {
+        console.log(e);
         var data = {
             'name': false,
             'user': findGetParameter('user'),
             'room': findGetParameter('name')
         }
-        
+
         socket.emit('join', data);
     });
 });
