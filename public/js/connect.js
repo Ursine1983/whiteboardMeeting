@@ -1,7 +1,5 @@
 function connect() {
-    import config from('../config/connection.json');
-    
-    var socket  = io.connect(config.url + ':8080');
+    var socket  = io.connect('http://192.168.100.235:8080');
 
     return socket;
 }
