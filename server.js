@@ -69,7 +69,6 @@ io.on('connection', function (socket) {
     });
 
     socket.on('join', function(data) {
-        console.log(data);
         for (const [key, value] of Object.entries(room_history)) {
             if(key !== data.name) {
                 socket.leave(key);
@@ -91,12 +90,10 @@ io.on('connection', function (socket) {
         }
         
         if(data.name === false) {
-            console.log(room_history);
             room_history[data.room]['user'].splice(data.user, 1);
             if(room_history[data.room]['user'].length === 0) {
                 delete room_history[data.room]
             }
-            console.log(room_history);
         }
         else {
             socket.join(data.name);
@@ -133,7 +130,7 @@ io.on('connection', function (socket) {
                 line_history = value['line_history'];
     
             for (var i in line_history) {
-                io.in(room).emit('draw_line', line_history[i] );
+                io.in(socket.id).emit('draw_line', line_history[i] );
             }
         }
         
@@ -142,7 +139,7 @@ io.on('connection', function (socket) {
                 chat_history = value['chat_history'];
     
             for (var i in chat_history) {
-                io.in(room).emit('new_message', { "message": chat_history[i] } );
+                io.in(socket.id).emit('new_message', { "message": chat_history[i] } );
             }
         }
     });
