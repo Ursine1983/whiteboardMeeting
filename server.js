@@ -15,7 +15,7 @@ server.listen(8080);
 
 // add directory with our static files
 app.use(express.static(__dirname + '/public'));
-console.log("Server running on 127.0.0.1:8080");
+console.log("Server running on port 8080");
 
 // event-handler for new incoming connections
 io.on('connection', function (socket) {
