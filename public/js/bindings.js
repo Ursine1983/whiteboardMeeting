@@ -55,7 +55,9 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     window.addEventListener('beforeunload', function(e) {
-        console.log('foobar');
-        socket.emit('join', false);
+        var data = {
+            'name': false
+        }
+        socket.emit('join', data);
     });
 });

@@ -69,6 +69,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('join', function(data) {
+        console.log(data);
         for (const [key, value] of Object.entries(room_history)) {
             if(key !== data.name) {
                 socket.leave(key);
@@ -88,8 +89,8 @@ io.on('connection', function (socket) {
         if(room_history.hasOwnProperty(data.name) && !room_history[data.name]['user'].includes(data.user)) {
             room_history[data.name]['user'].push(data.user);
         }
-        
-        if(data !== false) {
+        console.log(room_history);
+        if(data.name !== false) {
             socket.join(data.name);
             io.in(socket.id).emit('joined', data);
         }
