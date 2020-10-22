@@ -92,10 +92,10 @@ io.on('connection', function (socket) {
         if(data.name === false) {
             if(room_history.hasOwnProperty(data.room)) {
                 room_history[data.room]['user'].splice(data.user, 1);
-            }
-            
-            if(room_history[data.room]['user'].length === 0) {
-                delete room_history[data.room]
+
+                if(room_history[data.room]['user'].length === 0) {
+                    delete room_history[data.room]
+                }
             }
         }
         else {
