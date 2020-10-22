@@ -39,33 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             mouse.move = true;
         }
     };
-
-    /*function clearWhiteboard(bool) {
-        var room = findGetParameter('name'),
-            data;
-        if(bool) {
-            // create screenshot of the canvas
-            var img = canvas.toDataURL(),
-            name = prefix + document.querySelector('.whiteboardName').value + postfix,
-            
-            data = {
-                "screenshot": {
-                    "img": img,
-                    "sc_name": name
-                },
-                "name": room
-            }
-        }
-        else {
-            data = {
-                "screenshot": false,
-                "name": room
-            }
-        }
     
-        socket.emit('clear', data);
-    }*/
-
     // draw line received from server
     socket.on('draw_line', function (data) {
         var line = data.line;
@@ -117,8 +91,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
         setTimeout(mainLoop, 25);
     }
-
-    
 
     mainLoop();
     updateRoomsLoop();

@@ -89,8 +89,10 @@ io.on('connection', function (socket) {
             room_history[data.name]['user'].push(data.user);
         }
         
-        socket.join(data.name);
-        io.in(socket.id).emit('joined', data);
+        if(data !== false) {
+            socket.join(data.name);
+            io.in(socket.id).emit('joined', data);
+        }
     });
 
     socket.on('join_room', function(data) {
@@ -103,6 +105,10 @@ io.on('connection', function (socket) {
                 for(var user in value['user']) {
                     if(room_history[key]['user'][user] === data.user) {
                         room_history[key]['user'].splice(user, 1);
+
+                        if(room_history[key]['user'].length === 0) {
+                            delete room_history[key];
+                        }
                     }
                 }
             } 

@@ -53,4 +53,8 @@ document.addEventListener("DOMContentLoaded", function() {
             socket.emit('message', data);
         }
     });
+
+    document.addEventListener('beforeunload', function(e) {
+        socket.emit('join', false);
+    });
 });

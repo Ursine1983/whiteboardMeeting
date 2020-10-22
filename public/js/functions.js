@@ -17,6 +17,7 @@ function getFormattedDate() {
 function clearWhiteboard(bool) {
     var room = findGetParameter('name'),
         data;
+        
     if(bool) {
         // create screenshot of the canvas
         var canvas  = document.getElementById('drawing'),
