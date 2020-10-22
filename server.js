@@ -89,8 +89,16 @@ io.on('connection', function (socket) {
         if(room_history.hasOwnProperty(data.name) && !room_history[data.name]['user'].includes(data.user)) {
             room_history[data.name]['user'].push(data.user);
         }
-        console.log(room_history);
-        if(data.name !== false) {
+        
+        if(data.name === false) {
+            console.log(room_history);
+            room_history[data.room]['user'].splice(data.user, 1);
+            if(room_history[data.room]['user'].length === 0) {
+                delete room_history[data.room]
+            }
+            console.log(room_history);
+        }
+        else {
             socket.join(data.name);
             io.in(socket.id).emit('joined', data);
         }

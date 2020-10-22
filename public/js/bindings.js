@@ -56,8 +56,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
     window.addEventListener('beforeunload', function(e) {
         var data = {
-            'name': false
+            'name': false,
+            'user': findGetParameter('user'),
+            'room': findGetParameter('name')
         }
+        
         socket.emit('join', data);
     });
 });
