@@ -53,15 +53,4 @@ document.addEventListener("DOMContentLoaded", function() {
             socket.emit('message', data);
         }
     });
-
-    window.addEventListener('beforeunload', function(e) {
-        console.log(e);
-        var data = {
-            'name': false,
-            'user': findGetParameter('user'),
-            'room': findGetParameter('name')
-        }
-
-        socket.emit('join', data);
-    });
 });
