@@ -1,10 +1,8 @@
 function connect() {
-    fetch("../config/connection.json")
-        .then(function(response){
-            var config = response.json(),
-                socket  = io.connect(config.url + ':8080');
+    import config from('../config/connection.json');
+    
+    var socket  = io.connect(config.url + ':8080');
 
-                return socket;
-        });
+    return socket;
 }
 
