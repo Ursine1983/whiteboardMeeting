@@ -34,6 +34,12 @@
                 closeJoinDialogFunc();
             });
 
+            var user = localStorage.getItem('user');
+            
+            if(user !== null) {
+                socket.emit('clear_user', user);
+            }
+
             updateRoomsLoop();
         });
     </script>

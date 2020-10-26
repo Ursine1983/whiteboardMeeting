@@ -17,6 +17,24 @@ server.listen(8080);
 app.use(express.static(__dirname + '/public'));
 console.log("Server running on port 8080");
 
+function clearUser(data) {
+    for (const [key, value] of Object.entries(room_history)) {
+        if(key !== data.name) {
+            socket.leave(key);
+
+            for(var user in value['user']) {
+                if(room_history[key]['user'][user] === data.user) {
+                    room_history[key]['user'].splice(user, 1);
+
+                    if(room_history[key]['user'].length === 0) {
+                        delete room_history[key];
+                    }
+                }
+            }
+        } 
+    }
+}
+
 // event-handler for new incoming connections
 io.on('connection', function (socket) {
     console.log("Incomming connection handler set up");
@@ -69,21 +87,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('join', function(data) {
-        for (const [key, value] of Object.entries(room_history)) {
-            if(key !== data.name) {
-                socket.leave(key);
-
-                for(var user in value['user']) {
-                    if(room_history[key]['user'][user] === data.user) {
-                        room_history[key]['user'].splice(user, 1);
-
-                        if(room_history[key]['user'].length === 0) {
-                            delete room_history[key];
-                        }
-                    }
-                }
-            } 
-        }
+        clearUser(data);
         
         if(room_history.hasOwnProperty(data.name) && !room_history[data.name]['user'].includes(data.user)) {
             room_history[data.name]['user'].push(data.user);
@@ -96,21 +100,7 @@ io.on('connection', function (socket) {
     socket.on('join_room', function(data) {
         socket.join(data.name);
 
-        for (const [key, value] of Object.entries(room_history)) {
-            if(key !== data.name) {
-                socket.leave(key);
-
-                for(var user in value['user']) {
-                    if(room_history[key]['user'][user] === data.user) {
-                        room_history[key]['user'].splice(user, 1);
-
-                        if(room_history[key]['user'].length === 0) {
-                            delete room_history[key];
-                        }
-                    }
-                }
-            } 
-        }
+        clearUser(data);
         
         if(room_history.hasOwnProperty(data.name) && !room_history[data.name]['user'].includes(data.user)) {
             room_history[data.name]['user'].push(data.user);
@@ -142,5 +132,9 @@ io.on('connection', function (socket) {
 
     socket.on('user_list', function(data) {
         socket.emit('full_user_list', room_history[data.name]);
+    });
+
+    socket.on('clear_user', function(data) {
+        clearUser(data);
     });
 });

@@ -15,10 +15,18 @@
         document.addEventListener("DOMContentLoaded", function() {
             rooms();
             var room = findGetParameter('name'),
+                userName = findGetParameter('user'),
                 data = {
                   'name': room
+                },
+                user = {
+                  'name': room,
+                  'user': userName
                 };
+
             socket.emit('join_room', data);
+
+            localStorage.setItem('user', user);
 
             document.querySelector('.roomName').innerHTML = room.split('_')[1];
         });
